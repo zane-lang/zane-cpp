@@ -20,7 +20,7 @@ auto parse_scale(std::string_view text) -> zane::abortable<int, parse_error> {
 	if (text == "high") {
 		return zane::abortable<int, parse_error>::success(3);
 	}
-	return zane::abortable<int, parse_error>::abort({"expected "high""});
+	return zane::abortable<int, parse_error>::abort({"expected \"high\""});
 }
 
 auto scaled_rpm(Car car, std::string_view text) -> int {

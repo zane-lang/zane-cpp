@@ -1,8 +1,8 @@
 #pragma once
 
-#include <zane/abortable.hpp>
-#include <zane/array.hpp>
-#include <zane/pipe.hpp>
-#include <zane/ref.hpp>
-#include <zane/unit.hpp>
-#include <zane/version.hpp>
+#include "abortable.hpp"
+#include "array.hpp"
+#include "pipe.hpp"
+#include "ref.hpp"
+#include "unit.hpp"
+#include "version.hpp"

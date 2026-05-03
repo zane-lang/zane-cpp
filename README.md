@@ -40,7 +40,7 @@ auto parse_scale(std::string_view text) -> zane::abortable<int, ParseError> {
     if (text == "high") {
         return zane::abortable<int, ParseError>::success(3);
     }
-    return zane::abortable<int, ParseError>::abort({"expected "high""});
+    return zane::abortable<int, ParseError>::abort({"expected \"high\""});
 }
 
 int main() {

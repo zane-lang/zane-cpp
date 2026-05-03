@@ -17,7 +17,7 @@ struct parse_error {
 static_assert(std::is_same_v<decltype(zane::array(1, 2, 3)), zane::Array<3, int>>);
 
 inline void test_unit(suite& suite) {
-	ZANE_EXPECT(zane::unit{} == zane::void_value);
+	ZANE_EXPECT(suite, zane::unit{} == zane::void_value);
 }
 
 inline void test_ref(suite& suite) {
