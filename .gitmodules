@@ -1,0 +1,3 @@
+[submodule "third_party/zane-spec"]
+	path = third_party/zane-spec
+	url = https://github.com/zane-lang/spec
