@@ -4,9 +4,11 @@
 
 ## Spec target
 
-`zane-cpp` is currently aligned with [4a11ec9](https://github.com/zane-lang/spec/commit/4a11ec9a7b26fdf5993977603b24ce2e7582a6d2).
+`zane-cpp` is currently aligned with [a1921dd](https://github.com/zane-lang/spec/commit/a1921dd1bb923f2608d95893a0cee7d9ee660802).
 
 The pinned spec checkout lives in `third_party/zane-spec/`, and `docs/design.md` documents mappings and tradeoffs relative to that revision.
+
+Under that spec revision, Zane structs are transitively value-only: they may contain primitives and other structs, but they must not contain classes or `ref`s anywhere in their nested field graph. In this repository, `zane::ref<T>` examples therefore model Zane class-style storage or general C++ storage, not a Zane struct analogue.
 
 ## What v0.1 implements
 
