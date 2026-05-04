@@ -2,7 +2,7 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 
 root_header := "include-src/zane/prelude.hpp"
 single_header := "include/zane-cpp.hpp"
-cxx := env_var_or_default("CXX", "g++")
+cxx := env_var_or_default("CXX", "clang++")
 common_flags := "-std=c++20 -Wall -Wextra -Wpedantic -Werror -O2"
 
 # build-header runs Quom deterministically from include-src/zane/prelude.hpp into include/zane-cpp.hpp.

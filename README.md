@@ -60,8 +60,6 @@ A runnable example lives at [`examples/zane_like.cpp`](examples/zane_like.cpp).
 
 ## Development workflow
 
-The repo uses Devbox plus Just. Quom is installed from the devbox shell init hook. The sandbox already had a working system C++ compiler; an attempted `devbox add gcc` failed because `cache.nixos.org` DNS resolution was unavailable during setup, so the Just recipes currently invoke `g++` from the environment inside `devbox run -- ...`.
-
 ### Build the single header
 
 ```bash
