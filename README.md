@@ -2,6 +2,12 @@
 
 `zane-cpp` is a small header-only C++20 helper library for writing C++ in a style that feels closer to the [Zane language spec](https://github.com/zane-lang/spec). Version `0.1.0` focuses on a tiny, polished surface instead of trying to emulate the whole language.
 
+## Spec target
+
+`zane-cpp` is currently aligned with [4a11ec9](https://github.com/zane-lang/spec/commit/4a11ec9a7b26fdf5993977603b24ce2e7582a6d2).
+
+The pinned spec checkout lives in `third_party/zane-spec/`, and `docs/design.md` documents mappings and tradeoffs relative to that revision.
+
 ## What v0.1 implements
 
 - `zane::ref<T>` for explicit non-owning, rebindable references
