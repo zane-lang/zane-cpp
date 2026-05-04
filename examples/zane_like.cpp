@@ -8,7 +8,8 @@ struct Engine {
 	int rpm = 0;
 };
 
-struct Car {
+class Car {
+public:
 	zane::ref<Engine> engine;
 };
 

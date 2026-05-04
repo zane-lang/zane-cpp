@@ -2,7 +2,9 @@
 
 ## Scope and source of truth
 
-This repository follows the Zane spec from the pinned submodule at `third_party/zane-spec` (currently commit `4a11ec9a7b26fdf5993977603b24ce2e7582a6d2`). The surface syntax reference in `third_party/zane-spec/syntax.md` is the canonical source for language forms, and the semantic documents below drive the v0.1 feature selection.
+This repository follows the Zane spec from the pinned submodule at `third_party/zane-spec` (currently commit `a1921dd1bb923f2608d95893a0cee7d9ee660802`). The surface syntax reference in `third_party/zane-spec/syntax.md` is the canonical source for language forms, and the semantic documents below drive the v0.1 feature selection.
+
+At this spec revision, `syntax.md` §1.4, `oop.md` §2.2, and `memory_model.md` §2.10 together make Zane structs a transitively value-only storage form: a Zane struct may contain only primitives and other structs, and it becomes illegal as soon as any nested field path reaches a class or `ref`.
 
 v0.1 intentionally targets a tiny header-only helper library. The goal is to capture a few Zane idioms that map cleanly to portable C++20 without pretending to be a compiler, runtime, or source-to-source translation layer.
 
@@ -25,7 +27,7 @@ v0.1 intentionally targets a tiny header-only helper library. The goal is to cap
 | Fixed-size `Array[size]<T>` idiom | `syntax.md` §2.6, `type_parameters.md` §7 | `zane::Array<N, T>` aliases `std::array<T, N>`, and `zane::array(...)` deduces a fixed-size array value. | C++ template order is `Array<N, T>` instead of `Array[size]<T>`, and the alias cannot enforce all Zane const-parameter naming rules. | Implemented — easy, familiar, and zero-overhead. |
 | Explicit `mut` call markers (`:` vs `!`) | `syntax.md` §3.2 and §4.2, `oop.md` §4 | None in v0.1. C++ does not have custom call punctuation, and simulating it would require macros or proxy objects that obscure normal code. | Any faithful emulation would be syntactic theater rather than a clean library abstraction. | Rejected for v0.1 — too intrusive for too little value. |
 | Fields-only type bodies and package-scope behavior | `oop.md` §1-§5 | Documented as a usage convention: prefer plain structs/classes for storage and free functions with receiver-first signatures for behavior. | This is stylistic rather than enforceable in a header-only library. | Planned — worth documenting, but not as a library primitive. |
-| Single-assignment owners and caller-visible downgrade to refs after moves | `memory_model.md` §2.1-§3.4 | No direct helper in v0.1. | Safe C++ emulation would need ownership graph tracking, move hooks, and likely a runtime layer. A partial wrapper would imply guarantees it cannot actually keep. | Rejected for v0.1 — too much machinery for an honest library. |
+| Single-assignment owners and caller-visible downgrade to refs after moves | `memory_model.md` §2.1-§3.6 | No direct helper in v0.1. | Safe C++ emulation would need ownership graph tracking, move hooks, and likely a runtime layer. A partial wrapper would imply guarantees it cannot actually keep. | Rejected for v0.1 — too much machinery for an honest library. |
 | Anchors that keep refs valid across moves | `memory_model.md` §6 | None. | C++ object moves do not expose the hooks needed to retroactively retarget all references without controlling allocation and object representation. | Rejected for v0.1 — would require a custom runtime and different object model. |
 | `init{}` constructor shorthand / field constructors | `syntax.md` §3.3-§3.6, `oop.md` §3 | None. | Library helpers here would mostly rename aggregate initialization instead of adding real capability. | Planned — better expressed as documentation and examples than as code. |
 | Non-capturing, explicitly typed lambdas | `syntax.md` §3.7, `oop.md` §7 | None. | C++ lambdas capture by default and cannot be meaningfully constrained by a header-only helper library. | Rejected for v0.1 — enforceability is too weak. |
@@ -35,6 +37,8 @@ v0.1 intentionally targets a tiny header-only helper library. The goal is to cap
 ### `zane::ref<T>`
 
 Use `zane::ref<T>` when you want an explicit, rebindable, non-owning reference slot in C++ instead of a raw pointer. It is intentionally small: construct from an lvalue, rebind by assignment, and use it like a reference with `*` or `->`.
+
+Because the current spec forbids classes and `ref`s inside Zane structs transitively, a C++ type that stores `zane::ref<T>` should be documented as a Zane class analogue or as ordinary C++ scaffolding, not as a Zane-struct analogue.
 
 ### `zane::abortable<T, E>`
 
